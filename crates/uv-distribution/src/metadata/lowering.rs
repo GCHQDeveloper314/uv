@@ -361,9 +361,7 @@ impl LoweredRequirement {
                 })
                 .chain(std::iter::once(Ok(remaining)))
                 .filter(|requirement| match requirement {
-                    Ok(requirement) => {
-                        !(requirement.0.marker.is_false() || requirement.0.marker.is_conflicting())
-                    }
+                    Ok(requirement) => !requirement.0.marker.is_false(),
                     Err(_) => true,
                 }),
         )
@@ -515,9 +513,7 @@ impl LoweredRequirement {
                 })
                 .chain(std::iter::once(Ok(remaining)))
                 .filter(|requirement| match requirement {
-                    Ok(requirement) => {
-                        !(requirement.0.marker.is_false() || requirement.0.marker.is_conflicting())
-                    }
+                    Ok(requirement) => !requirement.0.marker.is_false(),
                     Err(_) => true,
                 }),
         )
