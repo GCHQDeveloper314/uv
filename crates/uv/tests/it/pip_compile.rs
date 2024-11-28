@@ -7218,13 +7218,13 @@ fn universal_conflicting() -> Result<()> {
         # via
         #   outcome
         #   trio
-    cffi==1.16.0 ; (implementation_name != 'pypy' and os_name == 'nt' and sys_platform == 'darwin') or (os_name == 'nt' and sys_platform == 'win32')
+    cffi==1.16.0 ; os_name == 'nt' and sys_platform == 'win32'
         # via trio
     idna==3.6 ; sys_platform == 'darwin' or sys_platform == 'win32'
         # via trio
     outcome==1.3.0.post0 ; sys_platform == 'darwin' or sys_platform == 'win32'
         # via trio
-    pycparser==2.21 ; (implementation_name != 'pypy' and os_name == 'nt' and sys_platform == 'darwin') or (os_name == 'nt' and sys_platform == 'win32')
+    pycparser==2.21 ; os_name == 'nt' and sys_platform == 'win32'
         # via cffi
     sniffio==1.3.1 ; sys_platform == 'darwin' or sys_platform == 'win32'
         # via trio
@@ -8951,8 +8951,6 @@ fn universal_disjoint_extra() -> Result<()> {
         # via flask
     click==8.1.7 ; sys_platform == 'darwin' or sys_platform == 'linux'
         # via flask
-    colorama==0.4.6 ; (platform_system == 'Windows' and sys_platform == 'darwin') or (platform_system == 'Windows' and sys_platform == 'linux')
-        # via click
     flask==3.0.2 ; sys_platform == 'linux'
         # via -r requirements.in
     itsdangerous==2.1.2 ; sys_platform == 'darwin' or sys_platform == 'linux'
@@ -8969,7 +8967,7 @@ fn universal_disjoint_extra() -> Result<()> {
         # via flask
 
     ----- stderr -----
-    Resolved 10 packages in [TIME]
+    Resolved 9 packages in [TIME]
     "###
     );
 
@@ -9000,8 +8998,6 @@ fn universal_disjoint_extra_no_strip() -> Result<()> {
         # via flask
     click==8.1.7 ; sys_platform == 'darwin' or sys_platform == 'linux'
         # via flask
-    colorama==0.4.6 ; (platform_system == 'Windows' and sys_platform == 'darwin') or (platform_system == 'Windows' and sys_platform == 'linux')
-        # via click
     flask==3.0.2 ; sys_platform == 'darwin' or sys_platform == 'linux'
         # via -r requirements.in
     flask[async]==3.0.2 ; sys_platform == 'linux'
@@ -9022,7 +9018,7 @@ fn universal_disjoint_extra_no_strip() -> Result<()> {
         # via flask
 
     ----- stderr -----
-    Resolved 10 packages in [TIME]
+    Resolved 9 packages in [TIME]
     "###
     );
 
@@ -9050,7 +9046,7 @@ fn universal_overlap_extra_base() -> Result<()> {
         # via flask
     click==8.1.7
         # via flask
-    colorama==0.4.6 ; platform_system == 'Windows'
+    colorama==0.4.6 ; platform_system == 'Windows' and sys_platform != 'darwin'
         # via click
     flask==3.0.2
         # via -r requirements.in
@@ -9097,7 +9093,7 @@ fn universal_overlap_extra_base_no_strip() -> Result<()> {
         # via flask
     click==8.1.7
         # via flask
-    colorama==0.4.6 ; platform_system == 'Windows'
+    colorama==0.4.6 ; platform_system == 'Windows' and sys_platform != 'darwin'
         # via click
     flask==3.0.2
         # via -r requirements.in
@@ -9147,8 +9143,6 @@ fn universal_overlap_extras() -> Result<()> {
         # via flask
     click==8.1.7 ; sys_platform == 'darwin' or sys_platform == 'linux'
         # via flask
-    colorama==0.4.6 ; (platform_system == 'Windows' and sys_platform == 'darwin') or (platform_system == 'Windows' and sys_platform == 'linux')
-        # via click
     flask==3.0.2 ; sys_platform == 'darwin' or sys_platform == 'linux'
         # via -r requirements.in
     itsdangerous==2.1.2 ; sys_platform == 'darwin' or sys_platform == 'linux'
@@ -9165,7 +9159,7 @@ fn universal_overlap_extras() -> Result<()> {
         # via flask
 
     ----- stderr -----
-    Resolved 10 packages in [TIME]
+    Resolved 9 packages in [TIME]
     "###
     );
 
@@ -9196,8 +9190,6 @@ fn universal_overlap_extras_no_strip() -> Result<()> {
         # via flask
     click==8.1.7 ; sys_platform == 'darwin' or sys_platform == 'linux'
         # via flask
-    colorama==0.4.6 ; (platform_system == 'Windows' and sys_platform == 'darwin') or (platform_system == 'Windows' and sys_platform == 'linux')
-        # via click
     flask[async]==3.0.2 ; sys_platform == 'darwin' or sys_platform == 'linux'
         # via -r requirements.in
     flask[dotenv]==3.0.2 ; sys_platform == 'darwin'
@@ -9216,7 +9208,7 @@ fn universal_overlap_extras_no_strip() -> Result<()> {
         # via flask
 
     ----- stderr -----
-    Resolved 10 packages in [TIME]
+    Resolved 9 packages in [TIME]
     "###
     );
 
@@ -9246,8 +9238,6 @@ fn universal_identical_extras() -> Result<()> {
         # via flask
     click==8.1.7 ; sys_platform == 'darwin'
         # via flask
-    colorama==0.4.6 ; platform_system == 'Windows' and sys_platform == 'darwin'
-        # via click
     flask==3.0.2 ; sys_platform == 'darwin'
         # via -r requirements.in
     itsdangerous==2.1.2 ; sys_platform == 'darwin'
@@ -9264,7 +9254,7 @@ fn universal_identical_extras() -> Result<()> {
         # via flask
 
     ----- stderr -----
-    Resolved 10 packages in [TIME]
+    Resolved 9 packages in [TIME]
     "###
     );
 
@@ -9295,8 +9285,6 @@ fn universal_identical_extras_no_strip() -> Result<()> {
         # via flask
     click==8.1.7 ; sys_platform == 'darwin'
         # via flask
-    colorama==0.4.6 ; platform_system == 'Windows' and sys_platform == 'darwin'
-        # via click
     flask[async, dotenv]==3.0.2 ; sys_platform == 'darwin'
         # via -r requirements.in
     itsdangerous==2.1.2 ; sys_platform == 'darwin'
@@ -9313,7 +9301,7 @@ fn universal_identical_extras_no_strip() -> Result<()> {
         # via flask
 
     ----- stderr -----
-    Resolved 10 packages in [TIME]
+    Resolved 9 packages in [TIME]
     "###
     );
 
