@@ -8,7 +8,7 @@ use std::process::ExitCode;
 use std::sync::atomic::Ordering;
 
 use anstream::eprintln;
-use anyhow::{bail, Result};
+use anyhow::{bail, Context, Result};
 use clap::error::{ContextKind, ContextValue};
 use clap::{CommandFactory, Parser};
 use owo_colors::OwoColorize;
@@ -1203,7 +1203,30 @@ async fn run(mut cli: Cli) -> Result<ExitStatus> {
                 trusted_publishing,
                 keyring_provider,
                 check_url,
+                index,
+                index_locations,
             } = PublishSettings::resolve(args, filesystem);
+
+            let (publish_url, check_url) = if let Some(index_name) = index {
+                debug!("Publishing with index {index_name}");
+                let index = index_locations
+                    .indexes()
+                    .find(|index| {
+                        index
+                            .name
+                            .as_ref()
+                            .is_some_and(|name| name.as_ref() == index_name)
+                    })
+                    .with_context(|| format!("No such index {index_name}"))?;
+                let publish_url = index
+                    .publish_url
+                    .clone()
+                    .with_context(|| format!("Index {index_name} is missing a publish URL"))?;
+                let check_url = index.url.clone();
+                (publish_url, Some(check_url))
+            } else {
+                (publish_url, check_url)
+            };
 
             commands::publish(
                 files,
